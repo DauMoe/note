@@ -20,19 +20,41 @@
 
 ## Common Topics/Questions:
 - React and ecosystem
+
 - Why React is popular than other library and frameworks?  
    - Angular is popular too but it's more complex than ReactJs. Developer can work with React as soon as they have basic knowlegde about Js but Angular requires Typescript, RxJs and so on.   
    - Project structure of Angular is more complex than React too
+
 - What is Virtual Dom? how it works and used inside React?  
--  - Virtual DOM just an Js Object to revival (tái hiện) real DOM in some moment and it has the same element like real DOM (div, p, span, ...) <=> (Object div, Object p, ...)
+   - Virtual DOM just an Js Object to revival (tái hiện) real DOM in some moment and it has the same element like real DOM (div, p, span, ...) <=> (Object div, Object p, ...)
    - Virtual DOM is a snapshot (a copy of real DOM) before updating and compare with a snapshot after updated. Thank for `Diffing` algorithm, React will find the difference and skip un-change elements
    - Benifit: VirtualDOM can run on multiple enviroment because `rendering` thing is split away from real DOM because virtual DOM just a Js Object 
+
 - What is Reconciliation? Basic operations about reconcilers?
+   - Reconsoliation is the way React compare two Virtual DOM trees and decide what PART of elements should be changed. Suppose, we just change the className of component so React will update the className instead re-render this component. If the type of element is different, React will unmount the old component and create a new thing and so the same thing with the children components are inside it. If no different, no change
+   - To do that, thank for helping of `Diffing` algorithm
+
+   **Follow the document**
+   - Reconcoliation an API that you don't need to worry about how React update every element
+   - First, whenever component is updated, new different tree is created and React has to fingure out the most efficiently way to update the UI match with updated tree
+   - Generic solutions finds the minimum elements that have changed however, the complexity of this algorithm is O(n^3) with N is number of elements => Big problem if N becomes a big number
+   - To resolve that, React creates a new algorithm with the complexity is O(n)
+
 - What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
+   - From version 16 and higher, React implements a new thing is called `Fiber`
+
 - Keys and why using keys?
+   - Whenever you insert a new element into the list. The index will be changed. Without key, React will compare base on the index of element, compare type and the content inside elements, insert make the index change so the bad case, React will re-render all elements in this list and it's very bad.
+   - Key to tell React the position of this element in previous and the next tree so React can increase the perfomance because it's no need to re-create all elements in the list
+   - The key must be unique, stable and predictable. If the ket is unstable, DOM nodes will be unnecessarily re-render and once of causes raise bad performance
+   => Shouldn't use key as index because if the list is re-order, index is changed and some elements will be re-render
+
 - What is Ref in React?
-- Why React use setState be hide the screen
-- What is immutable data? Why react state have to be immutable?
+
+- Why React use setState behide the screen
+   - When you change the state, React has to re-render this value so if you change the value directly, React won't know when the components should be re-render
+
+- What is immutable (bất biến) data? Why react state have to be immutable?
 - Why is it bad to access or mutate the state directly?
 - How many ways to copy object and what are they?
 - how can I render a responsive view? how do you know it has been resized or not?
