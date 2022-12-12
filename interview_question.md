@@ -41,8 +41,15 @@
    - To resolve that, React creates a new algorithm with the complexity is O(n)
 
 - What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
-   - Simple: Increase the Diffing algorithm O(n^3) => O(n)
-   - From version 16 and higher, React implements a new thing is called `Fiber`
+   - From version 16 and higher, React re-write the reconciliation. 
+   - From version 15 and above, the algorithm is called `Stack reconciliation` because it works the same with stack (LIFO)
+   - The thing that makes difference with `Stack Reconciliation`:
+      - Pause the work and come back later if having any work higher priority
+      - Assign the priority to different types of work
+      - Reuse previous completed work result
+      - Abort the work if it's no longer needed
+   - So new version of React provides new functions like `matchesPriority(fiber, priority)`, `requestIdleCallback(lowPriorityWork)`, etc
+   - Fiber structure can be refer [here](https://gist.githubusercontent.com/velotiotech/e479e75fe701d21d5c21ff3955203a35/raw/153b39a765e8dca79ae82408e2d7dff50a40d870/React-Fiber-type-defs.ts)
 
 - Keys and why using keys?
    - Whenever you insert a new element into the list. The index will be changed. Without key, React will compare base on the index of element, compare type and the content inside elements, insert make the index change so the bad case, React will re-render all elements in this list and it's very bad.
@@ -51,6 +58,7 @@
    => Shouldn't use key as index because if the list is re-order, index is changed and some elements will be re-render
 
 - What is Ref in React?
+   - It's a way to access the DOM nodes or React element that created by render method
   
 - Why React use setState behide the screen
    - When you change the state, React has to re-render this value so if you change the value directly, React won't know when the components should be re-render
@@ -77,6 +85,8 @@
    - I use CSS only like `animation` or `transform`
 
 - Problem solving - how to profile/debug the performance issue and how to resolve?
+   - Use `Profiler API` or React Dev Tool that has Profiler inside so you can know what component takes a lot of time to render (re-render) and how many times
+
 - React Component
 - Functional and Class component difference in React?
    - Syntax:
@@ -92,10 +102,12 @@
       - Ref always be returned in class component
       - Functional doesn't have this thing
   
-- What does Pure component do? How is it different from typical traditional class components?
+- What does PureComponent do? How is it different from typical traditional class components?
+   - React.PureComponent & React.Component have the same function but PureComponent use shallow compare state and props when having a change
+
 - React Component lifecycle?
    - First, **initial** receive props
-   - Second, ** component will be render and mounted in this phase
+   - Second, **mounting** component will be render and mounted in this phase
    - Third, **update** the component will be re-render if having any change from props and state
    - Last, **un mounting** component will be remove when it's not used
   
@@ -107,7 +119,13 @@
    - To handle the condition inside JSX, I always use condition operator (ternary) and that thing makes sure no exception 
   
 - What is React events? React events and HTML events differences?
+   - HTML access real DOM and React access Virtual DOM instead
+   - HTML events are written is lowercase, React events are camelCase
+   - In HTML, inline event function must has `()` * **Open and Close parenthesis** *. In React, just take the function inside **the curly bracket** `{}`
+
 - React controlled components and uncontrolled components differences?
+   - 
+   
 - How to share the common logic across the React component?
 - How to pass the data from parent to child component?
    - Use `props` to pass data from parent to child
@@ -119,7 +137,8 @@
    - use `getSnapshotBeforeUpdate(prevProps, prevState)`, you can do any thing before component is updated. Any value returned by this lifecycle method will be passed as a parameter to `componentDidUpdate()`
    - `componentDidUpdate ` run after that
   
-- What do react memo do inside react components? `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare (so sánh nông), we can custom the comparative at second params as a callback
+- What do react memo do inside react components? 
+   - `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare (so sánh nông), we can custom the comparative at second params as a callback
    *NOTE*: HOC is advantage skill in React. It doesn't React API. HOC is a function that receive a component as a param and return other component
   
 - useMemo and useCallback use cases?
@@ -128,12 +147,17 @@
   
 - How to implement the memoization function in Javascript (conceptually)? How do you hash dependencies?
 - How to store the scroll index when the user is scroll the page?
+   - Can save the index to storage because it's not sensitive data
+
 - Browser Engine
 - Why re-rendering or changing website on the browser is costly? or  How the browser behave when he has a change to the DOM what is the flow?
 - why the css transform is way better than margin left-right? (Refer: https://stackoverflow.com/questions/7108941/css-transform-vs-position)
 - Vector / Frame - reduce lagginess or lightweight - animation engine - image with transparency etc so need to get rid of it to lighten it etc… otherwise in frame, there is lagged animation
 - CSS object model?
 - why we should not use the important in CSS?
+   - If all styles use `!important`, nothing is important
+   - Un-expect behavior because nothing can higher priority than `!important`
+
 - How to measure the browser web performance? what are the solution to improve it?
 - Have you use the srcset of an image?  
 
@@ -146,6 +170,8 @@
 - Provide solutions for not re-render component when the redux store change
 - Create your own middleware with Redux?
 - How can I make an Ajax request (api request) with redux?
+   - You can `dispatch` an action after AJAX request done
+
 - Why Redux Thunk easier than Saga?
 - Redux Saga? Why is it invented how is it different from Redux Thunk or something like that? Side effect tasks?
 - Use generator for such purpose and why do we use generator functions?
