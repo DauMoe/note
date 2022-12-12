@@ -41,6 +41,7 @@
    - To resolve that, React creates a new algorithm with the complexity is O(n)
 
 - What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
+   - Simple: Increase the Diffing algorithm O(n^3) => O(n)
    - From version 16 and higher, React implements a new thing is called `Fiber`
 
 - Keys and why using keys?
@@ -87,6 +88,9 @@
    - **State**
       - Functional only have the state when we call `useState`
       - Class always have default state no matter you create or not. If you console.log `this` pointer inside the `constructor` method, you will see `state: null`
+   - **Ref**
+      - Ref always be returned in class component
+      - Functional doesn't have this thing
   
 - What does Pure component do? How is it different from typical traditional class components?
 - React Component lifecycle?
@@ -112,8 +116,16 @@
 - Rules of Hook?
 - Hook at the very top of document (not inside conditionals) why?
 - How can I use the getSnapshot before updating in the functional component?
-- What do react memo do inside react components?
+   - use `getSnapshotBeforeUpdate(prevProps, prevState)`, you can do any thing before component is updated. Any value returned by this lifecycle method will be passed as a parameter to `componentDidUpdate()`
+   - `componentDidUpdate ` run after that
+  
+- What do react memo do inside react components? `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare (so sánh nông), we can custom the comparative at second params as a callback
+   *NOTE*: HOC is advantage skill in React. It doesn't React API. HOC is a function that receive a component as a param and return other component
+  
 - useMemo and useCallback use cases?
+   - `useCallback(type => {}, deps)` is used when you want to memoize a **function** and return a new function if dependencies is changed => if components is re-render, function is NOT re-created (RETURN FUNCTION)
+   - `useMemo(() => val), deps)` is used when you want to re-cal a value (Array, string, etc) and return a new value if dependencies is changed => if components is re-render, value is NOT re-cal (RETURN VALUE)
+  
 - How to implement the memoization function in Javascript (conceptually)? How do you hash dependencies?
 - How to store the scroll index when the user is scroll the page?
 - Browser Engine
