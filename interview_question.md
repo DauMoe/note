@@ -41,8 +41,17 @@
    - To resolve that, React creates a new algorithm with the complexity is O(n)
 
 - What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
-   - Simple: Increase the Diffing algorithm O(n^3) => O(n)
-   - From version 16 and higher, React implements a new thing is called `Fiber`
+   - **Main goal**: making the animation smooth. Reduce the complexity of Diffing algorithm
+   - **Dive deep**
+      - From version 16 and higher, React re-write the reconciliation. 
+      - From version 15 and above, the algorithm is called `Stack reconciliation` because it works the same with stack (LIFO)
+      - The thing that makes difference with `Stack Reconciliation`:
+         - Pause the work and come back later if having any work higher priority
+         - Assign the priority to different types of work
+         - Reuse previous completed work result
+         - Abort the work if it's no longer needed
+      - So new version of React provides new functions like `matchesPriority(fiber, priority)`, `requestIdleCallback(lowPriorityWork)`, etc
+      - Fiber structure can be refer [here](https://gist.githubusercontent.com/velotiotech/e479e75fe701d21d5c21ff3955203a35/raw/153b39a765e8dca79ae82408e2d7dff50a40d870/React-Fiber-type-defs.ts)
 
 - Keys and why using keys?
    - Whenever you insert a new element into the list. The index will be changed. Without key, React will compare base on the index of element, compare type and the content inside elements, insert make the index change so the bad case, React will re-render all elements in this list and it's very bad.
@@ -51,6 +60,7 @@
    => Shouldn't use key as index because if the list is re-order, index is changed and some elements will be re-render
 
 - What is Ref in React?
+   - It's a way to access the DOM nodes or React element that created by render method
   
 - Why React use setState behide the screen
    - When you change the state, React has to re-render this value so if you change the value directly, React won't know when the components should be re-render
@@ -75,9 +85,12 @@
   
 - How to implement the animation in React
    - I use CSS only like `animation` or `transform`
+   - I hear about `useTransition` in React. Using for page route but I never use
 
 - Problem solving - how to profile/debug the performance issue and how to resolve?
-- React Component
+   - Use `Profiler API` or React Dev Tool that has Profiler inside so you can know what component takes a lot of time to render (re-render) and how many times
+
+## React Component
 - Functional and Class component difference in React?
    - Syntax:
       - Functional just a plain function in Js, receive props as params and return a React elements
@@ -92,10 +105,12 @@
       - Ref always be returned in class component
       - Functional doesn't have this thing
   
-- What does Pure component do? How is it different from typical traditional class components?
+- What does PureComponent do? How is it different from typical traditional class components?
+   - React.PureComponent & React.Component have the same function but PureComponent use shallow compare state and props when having a change
+
 - React Component lifecycle?
    - First, **initial** receive props
-   - Second, ** component will be render and mounted in this phase
+   - Second, **mounting** component will be render and mounted in this phase
    - Third, **update** the component will be re-render if having any change from props and state
    - Last, **un mounting** component will be remove when it's not used
   
@@ -107,19 +122,44 @@
    - To handle the condition inside JSX, I always use condition operator (ternary) and that thing makes sure no exception 
   
 - What is React events? React events and HTML events differences?
-- React controlled components and uncontrolled components differences?
+   - HTML access real DOM and React access Virtual DOM instead
+   - HTML events are written is lowercase, React events are camelCase
+   - In HTML, inline event function must has `()` * **Open and Close parenthesis** *. In React, just take the function inside **the curly bracket** `{}`
+
+- **React controlled components and uncontrolled components differences?**
+   - 
+   
 - How to share the common logic across the React component?
+   - Pass the logic function as a prop
+
 - How to pass the data from parent to child component?
    - Use `props` to pass data from parent to child
   
-- React Hook
+### React Hook
+- `useEffect` and `useLayoutEffect`
+   - `useEffect` run after render component. Suppose, we click button -> setState -> re-render -> update UI -> trigger useEffect (if setState inside useEffect, component will be re-rendered again)
+   - `useLayoutEffect` has the same function as `useEffect` BUT run **BEFORE** update the UI (before re-render). Same example, button is clicked -> setState -> render component -> trigger useLayoutEffect -> update UI
+
+- **Why couldn't use `async` inside `useEffect`?**
+   - Because async can raise leak memory. This thing happens when async is not finish but the component is unmounted
+
+- `useImperativeHandle`: customize the instance value and exposed *(expose: trưng bày)* to parent component when using `ref`
+
 - Rules of Hook?
+   - Only call hook on the top level. Not call inside loop, condition or nest function
+   - Only call Hooks from React Functions or custom hook. DO NOT call from regular Js (Benefit: make sure that all stateful logic of this component is clearly visible from its source code)
+   - Use ESLint, specific using `eslint-plugin-react-hooks`. That contains two above rules
+
 - Hook at the very top of document (not inside conditionals) why?
+   - Make sure hooks is called the same order each times component renders
+   - Helping React can preserve correctly state of Hook when `useState` and `useEffect` is called
+
 - How can I use the getSnapshot before updating in the functional component?
    - use `getSnapshotBeforeUpdate(prevProps, prevState)`, you can do any thing before component is updated. Any value returned by this lifecycle method will be passed as a parameter to `componentDidUpdate()`
    - `componentDidUpdate ` run after that
   
-- What do react memo do inside react components? `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare (so sánh nông), we can custom the comparative at second params as a callback
+- What do react memo do inside react components? 
+   - `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare (so sánh nông), we can custom the comparative at second params as a callback
    *NOTE*: HOC is advantage skill in React. It doesn't React API. HOC is a function that receive a component as a param and return other component
   
 - useMemo and useCallback use cases?
@@ -128,12 +168,17 @@
   
 - How to implement the memoization function in Javascript (conceptually)? How do you hash dependencies?
 - How to store the scroll index when the user is scroll the page?
+   - Can save the index to storage because it's not sensitive data
+
 - Browser Engine
 - Why re-rendering or changing website on the browser is costly? or  How the browser behave when he has a change to the DOM what is the flow?
 - why the css transform is way better than margin left-right? (Refer: https://stackoverflow.com/questions/7108941/css-transform-vs-position)
 - Vector / Frame - reduce lagginess or lightweight - animation engine - image with transparency etc so need to get rid of it to lighten it etc… otherwise in frame, there is lagged animation
 - CSS object model?
 - why we should not use the important in CSS?
+   - If all styles use `!important`, nothing is important
+   - Un-expect behavior because nothing can higher priority than `!important`
+
 - How to measure the browser web performance? what are the solution to improve it?
 - Have you use the srcset of an image?  
 
@@ -141,15 +186,48 @@
 - Why are we the state management (Redux)? or why does redux was built? what problem does Redux solve?
 - why Flux is multi stores while redux is only single store?
 - React Context and Redux. What is the different? what is your prefer?
+   - Different:
+      - Context:  
+         - This is designed to share data as global state
+         - All components inside Context Provider will re-render immediately -> Should create multiple context to manager -> DO NOT update frequency
+         - Good for simple flows data changes
+      - Redux:
+         - Designed for state management purpose -> cover this thing very well -> can update frequency
+         - Easy to understand the state change flow because the states are stored one place
+   => prefer redux because when app is scaled, we have to use Redux so why don't we use it in the first time?
+
 - Principles of Redux? Describe the redux workflow?
+   - Principles:
+      - Single source of truth: global state of app should be stored in one place. Prevent duplicate data many places and easier to debug and inspect changing
+      - State is read-only: only one-way to change state. That dispatches an action. Follow this way, the data is not overwrite by UI, UI just trace the update of state
+      - Change are made with pure reducer functions: Reducer function is pure function that receive previous state and an action. Return the next state
+   - Redux workflow: view -> dispatch action -> update state in store -> re-render view -> ...
+
 - Why reducers were invited in the first place? Build to guard the data and monitor/control the side effects
 - Provide solutions for not re-render component when the redux store change
+
+
 - Create your own middleware with Redux?
+   - Middleware is triggered before reducer receives an action AND after an action is dispatched
+
 - How can I make an Ajax request (api request) with redux?
+   - You can `dispatch` an action after AJAX request done
+
 - Why Redux Thunk easier than Saga?
 - Redux Saga? Why is it invented how is it different from Redux Thunk or something like that? Side effect tasks?
+
+- How saga work in basically?
+   - Saga uses for handle side effect like call API, read, write file, etc
+   - Main sage splits into two different things: workers & watchers
+      - Watchers: watching every action that is dispatched to redux store. If it matches with one of actions, this action will be assigned to workers
+
 - Use generator for such purpose and why do we use generator functions?
+   - generator function make your code look more synchronous => easy to read, write and test
+
 - Saga: What are differences between call and put action?
+   - `call` blocks the effect. Waiting for promise resolved before moving to next step
+   - `put` NOT block effect and saga can move to next step. `Action` will be dispatched internal
+
 - Server side rendering
 - Have you working with NextJS?
 - How to render the data on server side?errors
