@@ -21,6 +21,8 @@
 ## Common Topics/Questions:
 - React and ecosystem
 
+- `Pure function` is function doesn't raise any side effect (update global variable) when executing
+
 - Why React is popular than other library and frameworks?  
    - Angular is popular too but it's more complex than ReactJs. Developer can work with React as soon as they have basic knowledge about Js but Angular requires Typescript, RxJs and so on.   
    - Project structure of Angular is more complex than React too
@@ -72,9 +74,11 @@
    - if modifying the state directly, it's NOT trigger re-render => the value on UI is NOT updated and all function or calculation NOT re-execute
   
 - How many ways to copy object and what are they?
-   - Spread operator 
-   - Use JSON.parse(JSON.stringify({}))
-   - Use Object.assign({}, {});
+   - Spread operator ~ Object.assign()
+   - Use JSON.parse(JSON.stringify({}));
+   - Pros and cons:
+      - JSON.stringify will lost the fields with value is function or promise
+      - Spread operator is shallow copy. The value is object still has reference
   
 - how can I render a responsive view? how do you know it has been resized or not?
    - Using media query of CSS or re-cal the components if size change. To detect size of window is changed, we can add a listener event to window and re-cal if the size of window smaller than a value what we define
@@ -106,7 +110,8 @@
       - Functional doesn't have this thing
   
 - What does PureComponent do? How is it different from typical traditional class components?
-   - React.PureComponent & React.Component have the same function but PureComponent use shallow compare state and props when having a change
+   - PureComponent and ReactComponent trigger re-render whenever props or state of this component is changed
+   - **PureComponent will compare props when parent component re-render, ReactComponent is not**
 
 - React Component lifecycle?
    - First, **initial** receive props
@@ -126,8 +131,9 @@
    - HTML events are written is lowercase, React events are camelCase
    - In HTML, inline event function must has `()` * **Open and Close parenthesis** *. In React, just take the function inside **the curly bracket** `{}`
 
-- **React controlled components and uncontrolled components differences?**
-   - 
+- React controlled components and uncontrolled components differences? (refer [here](https://www.youtube.com/watch?v=ecY3QSxZZYY))
+   - Controlled component: this component element value are controlled by React state. Element value and state are the same. Follow `single source of truth`
+   - Uncontrolled component: the elements are controlled by DOM. Normally, you can use ref to access DOM node and get the value from that. But we have `two source of truth` here
    
 - How to share the common logic across the React component?
    - Pass the logic function as a prop
@@ -140,8 +146,8 @@
    - `useEffect` run after render component. Suppose, we click button -> setState -> re-render -> update UI -> trigger useEffect (if setState inside useEffect, component will be re-rendered again)
    - `useLayoutEffect` has the same function as `useEffect` BUT run **BEFORE** update the UI (before re-render). Same example, button is clicked -> setState -> render component -> trigger useLayoutEffect -> update UI
 
-- **Why couldn't use `async` inside `useEffect`?**
-   - Because async can raise leak memory. This thing happens when async is not finish but the component is unmounted
+- Why couldn't use `async` inside `useEffect`? (refer [here](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook))
+   - React expects `useEffect` returns the cleanup function or nothing but `async` return a Promise so we will raise the memory leak here
 
 - `useImperativeHandle`: customize the instance value and exposed *(expose: trưng bày)* to parent component when using `ref`
 
@@ -167,14 +173,50 @@
    - `useMemo(() => val), deps)` is used when you want to re-cal a value (Array, string, etc) and return a new value if dependencies is changed => if components is re-render, value is NOT re-cal (RETURN VALUE)
   
 - How to implement the memoization function in Javascript (conceptually)? How do you hash dependencies?
+   - Use an global Object as cache. Check this cache whenever you cal any formula => if existed ? get from cache : cal and save to cache
+  
 - How to store the scroll index when the user is scroll the page?
    - Can save the index to storage because it's not sensitive data
 
 - Browser Engine
-- Why re-rendering or changing website on the browser is costly? or  How the browser behave when he has a change to the DOM what is the flow?
+   - *To understand*
+      - UI -> Browser Engine -> Rendering Engine -> (Networking, Js Interpreter, UI -> UI Backend) ![Browser Engine](./media/browser_engine.png)
+
+   - The answer:
+      - It's core component, working as a bridge between `User interface` and `Rendering engine`. Handle the rendering engine depends on input received from UI
+
+- Why re-rendering or changing website on the browser is costly? or  How the browser behave when he has a change to the DOM what is the flow? (refer [here](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) and [here](https://medium.com/technogise/dom-manipulation-in-browser-59b793bee559))
+   - Repaint: 
+      - just happen when changing only in the visibility of the element and not for changes in the layout => expensive because it requires browser search though all elements to determine what visible and what should displayed
+      - Ex: add outline to elements, change background color, 
+   - Reflow:
+      - happen when changing the position, dimension of element => more critical then repaint because it's re-cal all element position and dimension, ... => leading to re-render part or all the document
+      - Ex: multiple DOM change, display none, visibility: hidden, ...
+
+   *Additional*
+   - CRP:
+      - DOM: construction is incremental. Using token turn into the DOM tree. Single DOM node start with `startTag` and end with `endTag`. This node contains data information about HTML Element. If having a `startTag` and `endTag` inside other `startTag` and `endTag`, we have a child DOM node. *The greater numbers of nodes, the longer following events in CRP will take*
+
+      - CSS Object Model: contains information how to style the DOM, similar with DOM but different. *The browser blocks page rendering until it receives and processes all CSS* because CSS can be overwritten so content can't be rendered until CSSOM is complete
+
+      - Render tree: capture both DOM and CSSOM tree and combine them into render tree. The browser checks every node from root of DOM tree and determine (xác định) which CSS will be attached. *Only capture visible content*
+
+      - Layout: Render tree is built, layout becomes possible. Depend on screen size, determines how elements are positioned on the page, width and height each element, the relation between them. *Layout performance depends on DOM - greater nodes, longer layout take*
+
+      -  Paint: painting the pixel on the screen. Just paint the impacted area, the browser just paint minimum are required
+   - Optimizing performance
+      - Minimum resource, async un-necessary resource by using async, defer or remove them 
+      - Order the critical resources are loaded by priority, shortening the critical path length
+
 - why the css transform is way better than margin left-right? (Refer: https://stackoverflow.com/questions/7108941/css-transform-vs-position)
+   - Because transform not break the layout. Margin may break the elements width and height
+   - Besides, transform is good for responsive than margin
+
 - Vector / Frame - reduce lagginess or lightweight - animation engine - image with transparency etc so need to get rid of it to lighten it etc… otherwise in frame, there is lagged animation
+
 - CSS object model?
+   - It's a set of APIs allowing control CSS from Js. The same with DOM but for CSS rather than HTML. Allow to modify CSS dynamic
+
 - why we should not use the important in CSS?
    - If all styles use `!important`, nothing is important
    - Un-expect behavior because nothing can higher priority than `!important`
@@ -184,7 +226,14 @@
 
 ## State management
 - Why are we the state management (Redux)? or why does redux was built? what problem does Redux solve?
+   - Know exactly where state is store, they will be scattered *(rải rác)* everywhere if app doesn't have state management
+   - Clearly state update flow and control update by one way flow
+   - Easy to understand
+
 - why Flux is multi stores while redux is only single store?
+   - Store in flux use to specific data. Like PostStore, MessageStore, .... ([Refer Flux](https://www.freecodecamp.org/news/how-to-use-flux-in-react-example/))
+   - Redux doesn't follow this way. Redux only has one store but having a lot of reducer. It's the same when you access all store in Flux in one place
+
 - React Context and Redux. What is the different? what is your prefer?
    - Different:
       - Context:  
@@ -203,9 +252,10 @@
       - Change are made with pure reducer functions: Reducer function is pure function that receive previous state and an action. Return the next state
    - Redux workflow: view -> dispatch action -> update state in store -> re-render view -> ...
 
-- Why reducers were invited in the first place? Build to guard the data and monitor/control the side effects
+- **Why reducers were invited in the first place? Build to guard the data and monitor/control the side effects**
+  
 - Provide solutions for not re-render component when the redux store change
-
+   - By default, Redux uses shallow equality check between props that generated by `mapStateToProps` and `mapDispatchToProps` args passed to `connect(mapStateToProps, mapDispatchToProps)`. But some case, this equality doesn't helpful 
 
 - Create your own middleware with Redux?
    - Middleware is triggered before reducer receives an action AND after an action is dispatched
@@ -228,11 +278,22 @@
    - `call` blocks the effect. Waiting for promise resolved before moving to next step
    - `put` NOT block effect and saga can move to next step. `Action` will be dispatched internal
 
-- Server side rendering
+- SSG: Static Site Generation
+   - Site is generated and cache in CDN. Very fast
+
+- SSR: Server side rendering
+   - Page will be rendered each request
+
 - Have you working with NextJS?
-- How to render the data on server side?errors
+
+- How to render the data on server side?
+   - `getServerSideProps`: use for SSR, never run on browser. Pass data to component as props
+   - `getStaticProps`: use for SSG (static site generation)
+   - `getInitialProps`: working as `componentDidMount` but can working with SSR
 - Enhance SEO
 - What is semantic HTML?
+   - Thẻ HTML ứng với nội dung được chứa như thẻ section (chia ra các phần riêng biệt của thẻ HTML), article (chứa các nội dung độc lập, bao gôm đầy đủ ngữ cảnh), nav (chưa các thẻ điều hướng đến các section cụ thể trong trang), aside, header, footer, div, main, body
+
 - Security
 - How to check the NPM packages vulnerability? 
 - Have you worked with Synk
