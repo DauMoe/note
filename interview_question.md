@@ -184,7 +184,6 @@
 
 - Why re-rendering or changing website on the browser is costly? or  How the browser behave when he has a change to the DOM what is the flow? (refer [here](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path))
 
-
 - why the css transform is way better than margin left-right? (Refer: https://stackoverflow.com/questions/7108941/css-transform-vs-position)
    - Because transform not break the layout. Margin may break the elements width and height
    - Besides, transform is good for responsive than margin
