@@ -18,11 +18,8 @@
  - Experience with docker and deployment tools
  - Experience with Xcode and Android Studio.
 
-## Common Topics/Questions:
-- React and ecosystem
-
-- `Pure function` is function doesn't raise any side effect (update global variable) when executing
-
+# Common Topics/Questions:
+## React and ecosystem
 - Why React is popular than other library and frameworks?
    - Angular is popular too but it's more complex than ReactJs. Developer can work with React as soon as they have basic knowledge about Js but Angular requires Typescript, RxJs and so on.   
    - Project structure of Angular is more complex than React too
@@ -177,8 +174,7 @@
   
 - How to store the scroll index when the user is scroll the page?
    - Can save the index to storage because it's not sensitive data
-
-- Browser Engine
+## Browser Engine
    - *To understand*
       - UI -> Browser Engine -> Rendering Engine -> (Networking, Js Interpreter, UI -> UI Backend) ![Browser Engine](./media/browser_engine.png)
 
@@ -277,7 +273,7 @@
 - Saga: What are differences between call and put action?
    - `call` blocks the effect. Waiting for promise resolved before moving to next step
    - `put` NOT block effect and saga can move to next step. `Action` will be dispatched internal
-
+## Server side rendering
 - SSG: Static Site Generation
    - Site is generated and cache in CDN. Very fast
 
@@ -294,10 +290,16 @@
 - What is semantic HTML?
    - Thẻ HTML ứng với nội dung được chứa như thẻ section (chia ra các phần riêng biệt của thẻ HTML), article (chứa các nội dung độc lập, bao gôm đầy đủ ngữ cảnh), nav (chưa các thẻ điều hướng đến các section cụ thể trong trang), aside, header, footer, div, main, body
 
-- Security
+## Security
 - How to check the NPM packages vulnerability? 
+   - Using `npm audit` command to check the vulnerability of all packages in project
+   - How to fix vulnerability
+      - Update the latest version each package
+      - Run recommend command to check
+      - Run `npm audit fix`, 
+
 - Have you worked with Synk
-- Mobile development and other
+## Mobile development and other
 - When the libraries is deprecated, how to refactor or enhancement code?
 - Have you worked with PWA?
 - Communication between native mobile app and webview (web app)

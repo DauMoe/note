@@ -1,0 +1,1 @@
+- `Pure function` is function doesn't raise any side effect (update global variable) when executing
