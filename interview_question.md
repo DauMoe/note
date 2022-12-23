@@ -23,11 +23,11 @@
 
 - `Pure function` is function doesn't raise any side effect (update global variable) when executing
 
-- Why React is popular than other library and frameworks?  
+- Why React is popular than other library and frameworks?
    - Angular is popular too but it's more complex than ReactJs. Developer can work with React as soon as they have basic knowledge about Js but Angular requires Typescript, RxJs and so on.   
    - Project structure of Angular is more complex than React too
 
-- What is Virtual Dom? how it works and used inside React?  
+- What is Virtual Dom? how it works and used inside React?
    - Virtual DOM just an Js Object to revival (tái hiện) real DOM in some moment and it has the same element like real DOM (div, p, span, ...) <=> (Object div, Object p, ...)
    - Virtual DOM is a snapshot (a copy of real DOM) before updating and compare with a snapshot after updated. Thank for `Diffing` algorithm, React will find the difference and skip un-change elements
    - Benefit: VirtualDOM can run on multiple environment because `rendering` thing is split away from real DOM because virtual DOM just a Js Object 
