@@ -4,13 +4,20 @@
     +) Use CDN to load faster  
     +) Use cache or store in local side. Apply with the resource that often be used  
     
- - Solid knowledge of web technologies (HTML/CSS/JavaScript) and frameworks in building responsive design and cross browser compatible
- - Solid understanding of JavaScript (ES6+)
+ - Solid knowledge of web technologies (HTML/CSS/JavaScript) and frameworks in building responsive design and cross browser compatible: 
+   - using tailwind, bootstrap, not using .....
+ - Solid understanding of JavaScript (ES6+): 
+   -compare with ES5, ES7, ES12, ...
  - Solid knowledge of React, React-Native, and similar technologies
  - Hands-on experience with popular JavaScript tools, frameworks and design principals, and up to date with the changing JavaScript ecosystem landscape
- - Experience in analyzing UI performance metrics and optimizing the implementation
- - Ability to perform and influence code reviews as well as technical design meetings
+ - Experience in analyzing UI performance metrics and optimizing the implementation: 
+   - how to anal and monitor, ...
+ - Ability to perform and influence code reviews as well as technical design meetings: 
+   - split to branch, pull request, merge request, review code for younger guys
  - Thorough understanding of Software Development Lifecycle and methodologies
+   - What we can push into the Sprint
+   - In this Sprint, we have to prepare for next Sprint. Estimate the task, backlog
+   - Can fix the issue in the future, write story book, ...
 
 ## Preferred Skills & Requirements:
  - Working experience with Scrum or similar agile methodologies
@@ -40,7 +47,7 @@
    - To resolve that, React creates a new algorithm with the complexity is O(n)
 
 - What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
-   - **Main goal**: making the animation smooth. Reduce the complexity of Diffing algorithm
+   - **Main goal**: making the animation smooth by using new algorithm to detect exactly what thing should re-render immediately and what thing can be re-render after. Reduce the complexity of Diffing algorithm
    - **Dive deep**
       - From version 16 and higher, React re-write the reconciliation. 
       - From version 15 and above, the algorithm is called `Stack reconciliation` because it works the same with stack (LIFO)
@@ -110,18 +117,24 @@
    - PureComponent and ReactComponent trigger re-render whenever props or state of this component is changed
    - **PureComponent will compare props when parent component re-render, ReactComponent is not**
 
-- React Component lifecycle?
-   - First, **initial** receive props
-   - Second, **mounting** component will be render and mounted in this phase
-   - Third, **update** the component will be re-render if having any change from props and state
-   - Last, **un mounting** component will be remove when it's not used
+- React Component lifecycle? refer [here](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+   - Second, **mounting** component will be render and mounted in this phase (constructor, getDerivedStateFromProps. render, componentDidMount)
+   - Third, **update** the component will be re-render if having any change from props and state or parent updating (getDerivedStateProps. shouldComponentUpdate, getSnapshotBeforeUpdate, componentDidUpdate)
+   - Last, **un mounting** component will be remove when it's not used (componentWillUnmount)
   
 - Use-case of using and not using getDerivedStateFromProps, getSnapshotBeforeUpdate
-   - **getDerivedStateFromProps**: called whenever component is created or update props and state
+   - `getDerivedStateFromProps(nextProps, prevState)`: replace and the same function as `componentWillReceiveProps(nextProps)` that will be removed in version 17 because it's not work in async rendering. Called whenever component is created or update props
+      - Use case: use when modify the props like cal something with the props and update it to state
+
+   - `getSnapshotBeforeUpdate(prevProps, prevState)`: run after UI is updated, run before `componentDidUpdate(prevProps, prevState, snapshot)` but props or state's value is before rendering happen. Refer [here](https://viblo.asia/p/tim-hieu-vong-doi-cua-react-16-component-phan-2-naQZRW6dlvx)
+      - Use case: using to auto scroll to position in chat. Eg: you have new messages => scrollHeight after !== scrollHeight before update => cal and the different inside `getSnapshotBeforeUpdate` and pass value to `componentDidUpdate` => scroll new message here
   
 - How are errors handled in React?
-   - NOT sure what kind of errors that is mentioned here. Error about the logic, I will use `try-catch` to make sure every error is handle and they NOT make the app crash
+   - Using `try-catch` to handle logical error
    - To handle the condition inside JSX, I always use condition operator (ternary) and that thing makes sure no exception 
+   - Can use `componentDidCatch(err, info)`, it's the same with `getDerivedStateFromError` but is called during "commit" phase so can run side-effect like logging 
+   - For common, we can use `getDerivedStateFromError(error)` and return value to update state. We can depend on this state value to handle UI error or not
+      *Document: getDerivedStateFromError is invoked after an error has been thrown by a descendant component. It receives the error that was thrown as a parameter and should return a value to update state.*
   
 - What is React events? React events and HTML events differences?
    - HTML access real DOM and React access Virtual DOM instead
@@ -139,15 +152,6 @@
    - Use `props` to pass data from parent to child
   
 ### React Hook
-- `useEffect` and `useLayoutEffect`
-   - `useEffect` run after render component. Suppose, we click button -> setState -> re-render -> update UI -> trigger useEffect (if setState inside useEffect, component will be re-rendered again)
-   - `useLayoutEffect` has the same function as `useEffect` BUT run **BEFORE** update the UI (before re-render). Same example, button is clicked -> setState -> render component -> trigger useLayoutEffect -> update UI
-
-- Why couldn't use `async` inside `useEffect`? (refer [here](https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook))
-   - React expects `useEffect` returns the cleanup function or nothing but `async` return a Promise so we will raise the memory leak here
-
-- `useImperativeHandle`: customize the instance value and exposed *(expose: trưng bày)* to parent component when using `ref`
-
 - Rules of Hook?
    - Only call hook on the top level. Not call inside loop, condition or nest function
    - Only call Hooks from React Functions or custom hook. DO NOT call from regular Js (Benefit: make sure that all stateful logic of this component is clearly visible from its source code)
@@ -162,7 +166,7 @@
    - `componentDidUpdate ` run after that
   
 - What do react memo do inside react components? 
-   - `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare (so sánh nông), we can custom the comparative at second params as a callback
+   - `React.memo` is HOC and it memoizes the passed in components so we can decide re-render the component or not. By default, comparative is shallow compare, we can custom the comparative at second params as a callback
    *NOTE*: HOC is advantage skill in React. It doesn't React API. HOC is a function that receive a component as a param and return other component
   
 - useMemo and useCallback use cases?
@@ -218,7 +222,8 @@
    - Un-expect behavior because nothing can higher priority than `!important`
 
 - How to measure the browser web performance? what are the solution to improve it?
-- Have you use the srcset of an image?  
+- Have you use the srcset of an image?
+   - Yeah, not often. I use it for optimize the image
 
 ## State management
 - Why are we the state management (Redux)? or why does redux was built? what problem does Redux solve?
