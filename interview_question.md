@@ -179,11 +179,10 @@
 - How to store the scroll index when the user is scroll the page?
    - Can save the index to storage because it's not sensitive data
 ## Browser Engine
-   - *To understand*
-      - UI -> Browser Engine -> Rendering Engine -> (Networking, Js Interpreter, UI -> UI Backend) ![Browser Engine](./media/browser_engine.png)
+   - Browser Engine Flow ![Browser Engine](./media/browser_engine.png)
 
-   - The answer:
-      - It's core component, working as a bridge between `User interface` and `Rendering engine`. Handle the rendering engine depends on input received from UI
+      <!-- - The answer:
+         - It's core component, working as a bridge between `User interface` and `Rendering engine`. Handle the rendering engine depends on input received from UI -->
 
 - Why re-rendering or changing website on the browser is costly? or  How the browser behave when he has a change to the DOM what is the flow? (refer [here](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) and [here](https://medium.com/technogise/dom-manipulation-in-browser-59b793bee559))
    - Repaint: 
@@ -192,9 +191,8 @@
    - Reflow:
       - happen when changing the position, dimension of element => more critical then repaint because it's re-cal all element position and dimension, ... => leading to re-render part or all the document
       - Ex: multiple DOM change, display none, visibility: hidden, ...
-
-   *Additional*
-   - CRP:
+   ```
+   - Additional
       - DOM: construction is incremental. Using token turn into the DOM tree. Single DOM node start with `startTag` and end with `endTag`. This node contains data information about HTML Element. If having a `startTag` and `endTag` inside other `startTag` and `endTag`, we have a child DOM node. *The greater numbers of nodes, the longer following events in CRP will take*
 
       - CSS Object Model: contains information how to style the DOM, similar with DOM but different. *The browser blocks page rendering until it receives and processes all CSS* because CSS can be overwritten so content can't be rendered until CSSOM is complete
@@ -207,7 +205,7 @@
    - Optimizing performance
       - Minimum resource, async un-necessary resource by using async, defer or remove them 
       - Order the critical resources are loaded by priority, shortening the critical path length
-
+   ```
 - why the css transform is way better than margin left-right? (Refer: https://stackoverflow.com/questions/7108941/css-transform-vs-position)
    - Because transform not break the layout. Margin may break the elements width and height
    - Besides, transform is good for responsive than margin
@@ -261,8 +259,9 @@
       - Change are made with pure reducer functions: Reducer function is pure function that receive previous state and an action. Return the next state
    - Redux workflow: view -> dispatch action -> update state in store -> re-render view -> ...
 
-- **Why reducers were invited in the first place?** 
-   - Build to guard the data and monitor/control the side effects
+- Why reducers were invited in the first place?
+   - Reducers used to monitor and manager state flow. You can dispatch an action and return data after update so that why it's very important
+   *Build to guard the data and monitor/control the side effects*
   
 - Provide solutions for not re-render component when the redux store change
    - use hook selector to select exactly the state that is used by components. Not select a bigger state
@@ -271,14 +270,18 @@
    - Middleware is triggered before reducer receives an action AND after an action is dispatched
 
 - How can I make an Ajax request (api request) with redux?
-   - You can `dispatch` an action after AJAX request done
+   - We can use Redux-thunk and handle async action like AJAX and `dispatch` an action after AJAX request done
 
 - Why Redux Thunk easier than Saga?
    - Redux thunk is easier to setup, very simple because you can handle and update to store by `dispatch` in a function. Familiar with native Js code by using promise or async/await
       - Cons: with complexity logical or big business rule, take a lot of code in a function, hard to test
    - Saga use helper function to let redux know what it should it do in next step, using generator function to stop and execute other thing before continue. At least, we have to setup saga an reducer to handle two different ways, saga for side effect, reducer to update state in store
 
-- **Redux Saga? Why is it invented how is it different from Redux Thunk or something like that? Side effect tasks?**
+- Redux Saga? Why is it invented how is it different from Redux Thunk or something like that? Side effect tasks?
+   - In redux-thunk, we can handle the side-effect inside action using vanila Js, handle Promise, so on and dispatch inside immediately after everything is done
+      => With more complex logical, the code is very big and not clearly so we have saga
+   - In saga, action just send the type of action and payload. After that, saga will listen to dispatch event, using helper function like call, fork, ... to handle side-effect to dispatch other action to update the state 
+      => The flow is very clearly but take a lot of time to understand and setup
 
 - How saga work in basically?
    - Saga uses for handle side effect like call API, read, write file, etc
@@ -296,10 +299,21 @@
 - Have you working with NextJS?
 
 - How to render the data on server side?
+   - NextJs mode: Next.js has two forms of pre-rendering: Static Generation and Server-side Rendering. The difference is in when it generates the HTML for a page.
+      - Static Generation:
+         - is the pre-rendering method that generates the HTML at build time. The pre-rendered HTML is then reused on each request and served by CDN
+         - Fetch data in build time and become a static site by using `getStaticProps()`
+      - Server-side Rendering
+         - is the pre-rendering method that generates the HTML on each request.
+         - Using `getServerSideProps(context)` to fetch data each time user request to server
+            *'context' contains request specific parameter*
+   => So if we don't need to pre-render with data in server side. We can served static site and fetch data in client-side using Js
+   
+   ```
    - `getServerSideProps`: use for SSR, never run on browser. Pass data to component as props
    - `getStaticProps`: use for SSG (static site generation)
    - `getInitialProps`: working as `componentDidMount` but can working with SSR
-
+   ```
 - Enhance (improve) SEO
    - Improve keyword
    - Repeat the keyword several times in the page, highlight them, good content for user => bot will mark it's good content for user => improve SEO
@@ -308,7 +322,9 @@
    - Always use `alt` attributes for images or videos
 
 - What is semantic HTML?
-   - Thẻ HTML ứng với nội dung được chứa như thẻ section (chia ra các phần riêng biệt của thẻ HTML), article (chứa các nội dung độc lập, bao gôm đầy đủ ngữ cảnh), nav (chưa các thẻ điều hướng đến các section cụ thể trong trang), aside, header, footer, div, main, body
+   - They are semantic elements that clearly describes meaning for developer and browser
+      - E.g: section tag define a thematic grouping of content, typically with a heading 
+   *Thẻ HTML ứng với nội dung được chứa như thẻ section (chia ra các phần riêng biệt của thẻ HTML), article (chứa các nội dung độc lập, bao gôm đầy đủ ngữ cảnh), nav (chưa các thẻ điều hướng đến các section cụ thể trong trang), aside, header, footer, div, main, body*
 
 ## Security
 - How to check the NPM packages vulnerability? 
