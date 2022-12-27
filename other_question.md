@@ -8,3 +8,9 @@
    - `useLayoutEffect` has the same function as `useEffect` BUT run **BEFORE** update the UI (before re-render). Same example, button is clicked -> setState -> render component -> trigger useLayoutEffect -> update UI
 
 - `useImperativeHandle`: customize the instance value and exposed *(expose: trưng bày)* to parent component when using `ref`
+
+- SSG: Static Site Generation
+   - Site is generated and cache in CDN. Very fast
+
+- SSR: Server side rendering
+   - Page will be rendered each request
