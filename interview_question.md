@@ -118,6 +118,7 @@
    - **PureComponent will compare props when parent component re-render, ReactComponent is not**
 
 - React Component lifecycle? refer [here](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+   ![React Life Cycle](./media//react_life_cycle.png)
    - Second, **mounting** component will be render and mounted in this phase (constructor, getDerivedStateFromProps. render, componentDidMount)
    - Third, **update** the component will be re-render if having any change from props and state or parent updating (getDerivedStateProps. shouldComponentUpdate, getSnapshotBeforeUpdate, componentDidUpdate)
    - Last, **un mounting** component will be remove when it's not used (componentWillUnmount)
@@ -308,7 +309,7 @@
          - Using `getServerSideProps(context)` to fetch data each time user request to server
             *'context' contains request specific parameter*
    => So if we don't need to pre-render with data in server side. We can served static site and fetch data in client-side using Js
-   
+
    ```
    - `getServerSideProps`: use for SSR, never run on browser. Pass data to component as props
    - `getStaticProps`: use for SSG (static site generation)
