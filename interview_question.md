@@ -133,8 +133,10 @@
   
 - **What is React events? React events and HTML events differences?**
    - HTML access real DOM and React access Virtual DOM instead
-   - HTML events are written is lowercase, React events are camelCase
-   - In HTML, inline event function must has `()` * **Open and Close parenthesis** *. In React, just take the function inside **the curly bracket** `{}`
+   - HTML events are written is lowercase (onclick, onsubmit), React events are camelCase (onClick, onSubmit)
+   - We can add any listener by using external Js but React component have to specify events when creating the component
+   - HTML, Bind listener as a string. React, we bind as a variable or function
+   <!-- - In HTML, inline event function must has `()` * **Open and Close parenthesis** *. In React, just take the function inside **the curly bracket** `{}` -->
 
 - **React controlled components and uncontrolled components differences?** (refer [here](https://www.youtube.com/watch?v=ecY3QSxZZYY))
    - Controlled component: this component element value are controlled by React state. Element value and state are the same. Follow `single source of truth`
