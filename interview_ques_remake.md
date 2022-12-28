@@ -17,7 +17,7 @@ Experience with Xcode and Android Studio.
 
 # Common Topics/Questions:
 ## React and ecosystem
-[Why React is popular than other library and frameworks?](#Why_React_is_popular_than_other_library_and_frameworks)
+[Why React is popular than other library and frameworks?](#why-react-is-popular-than-other-library-and-frameworks)
 What is Virtual Dom? how it works and used inside React?
 What is Reconciliation? Basic operations about reconcilers?
 What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
