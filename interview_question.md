@@ -201,7 +201,7 @@
    - Because transform not break the layout. Margin may break the elements width and height
    - Besides, transform is good for responsive than margin
 - **Vector / Frame - reduce lagginess or lightweight - animation engine - image with transparency etc so need to get rid of it to lighten it etc… otherwise in frame, there is lagged animation**
-   - 
+   - How to make svg animation smoother
 - **CSS object model?**
    - It's a set of APIs allowing control CSS from Js. The same with DOM but for CSS rather than HTML. Allow to modify CSS dynamic
 - **why we should not use the important in CSS?**
