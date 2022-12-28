@@ -1,23 +1,23 @@
 # JD
 ## Essential Skills & Requirements:
-Experience in building web applications with video playback capabilities
-Solid knowledge of web technologies (HTML/CSS/JavaScript) and frameworks in building responsive design and cross browser compatible
-Solid understanding of JavaScript (ES6+)
-Solid knowledge of React, React-Native, and similar technologies
-Hands-on experience with popular JavaScript tools, frameworks and design principals, and up to date with the changing JavaScript ecosystem landscape
-Experience in analyzing UI performance metrics and optimizing the implementation
-Ability to perform and influence code reviews as well as technical design meetings
-Thorough understanding of Software Development Lifecycle and methodologies
+#### Experience in building web applications with video playback capabilities
+#### Solid knowledge of web technologies (HTML/CSS/JavaScript) and frameworks in building responsive design and cross browser compatible
+#### Solid understanding of JavaScript (ES6+)
+#### Solid knowledge of React, React-Native, and similar technologies
+#### Hands-on experience with popular JavaScript tools, frameworks and design principals, and up to date with the changing JavaScript ecosystem landscape
+#### Experience in analyzing UI performance metrics and optimizing the implementation
+#### Ability to perform and influence code reviews as well as technical design meetings
+#### Thorough understanding of Software Development Lifecycle and methodologies
 
 ## Preferred Skills & Requirements:
-Working experience with Scrum or similar agile methodologies
-Experience with version control systems (e.g. Git) and understanding of branching models & strategies
-Experience with docker and deployment tools
-Experience with Xcode and Android Studio.
+#### Working experience with Scrum or similar agile methodologies
+#### Experience with version control systems (e.g. Git) and understanding of branching models & strategies
+#### Experience with docker and deployment tools
+#### Experience with Xcode and Android Studio.
 
 # Common Topics/Questions:
 ## React and ecosystem
-#### Why React is popular than other library and frameworks?
+##### Why React is popular than other library and frameworks?
 #### What is Virtual Dom? how it works and used inside React?
 #### What is Reconciliation? Basic operations about reconcilers?
 #### What is main goal for React Fiber?  or How react internally working? https://indepth.dev/posts/1008/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react
