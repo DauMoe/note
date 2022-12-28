@@ -88,5 +88,5 @@ Did you write in objective C or anything Apple Native / Swift?
 Deal with Android studio and xCode?
 How do you learn new tech or new library? (twitter channel, documentations, articles research, online course platforms, youtube conference for react etc…)
 
-# Why React is popular than other library and frameworks  
+#### Why React is popular than other library and frameworks  
 Not sure
