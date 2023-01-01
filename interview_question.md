@@ -36,7 +36,7 @@
 | Disadvanctages 	| - Take a lot of time to familiar with JSX<br>- The documentation is not good. Most of solutions come from community 	| - Lack of plugins<br>- Invented after React<br>- Not support by big business so can stop support any time 	| - Hard to learn for beginner<br>- The folder structure is complex 	|
   
 - **What is Virtual Dom? how it works and used inside React?**
-   - Virtual DOM just an Js Object to revival (tái hiện) real DOM in some moment and it has the same element like real DOM (div, p, span, ...) <=> (Object div, Object p, ...)
+   - Virtual DOM just an Js Object to revival (tái hiện) real DOM. It has the same element like real DOM (div, p, span, ...) <=> (Object div, Object p, ...)
    - Virtual DOM is a snapshot (a copy of real DOM) before updating and compare with a snapshot after updated. Thank for `Diffing` algorithm, React will find the difference and skip un-change elements
    - Benefit: VirtualDOM can run on multiple environment because `rendering` thing is split away from real DOM because virtual DOM just a Js Object 
 - **What is Reconciliation? Basic operations about reconcilers?**
@@ -61,8 +61,9 @@
       - Fiber structure can be refer [here](https://gist.githubusercontent.com/velotiotech/e479e75fe701d21d5c21ff3955203a35/raw/153b39a765e8dca79ae82408e2d7dff50a40d870/React-Fiber-type-defs.ts)
 
 - **Keys and why using keys?**
-   - Whenever you insert a new element into the list. The index will be changed. Without key, React will compare base on the index of element, compare type and the content inside elements, insert make the index change so the bad case, React will re-render all elements in this list and it's very bad.
-   - Key to tell React the position of this element in previous and the next tree so React can increase the performance because it's no need to re-create all elements in the list
+   - WHY: Key to tell React the position of this element in previous and the next tree so React can increase the performance because it's no need to re-create all elements in the list
+   - HOW: Whenever you insert a new element into the list. The index will be changed. Without key, React will compare base on the index of element, compare type and the content inside elements, insert make the index change so the bad case, React will re-render all elements in this list and it's very bad.
+  
    - The key must be unique, stable and predictable. If the ket is unstable, DOM nodes will be unnecessarily re-render and once of causes raise bad performance
    => Shouldn't use key as index because if the list is re-order, index is changed and some elements will be re-render
 - **What is Ref in React?**
@@ -71,7 +72,7 @@
 - **Why React use setState behide the screen**
    - When you change the state, React has to re-render this value so if you change the value directly, React won't know when the components should be re-render
 - **What is immutable (bất biến) data? Why react state have to be immutable?**
-   - To make sure that the UI will updated whenever state change because React will doesn't know when the components should be re-rendered
+   - This is the concept of React. The idea behind that is that in order to track changes in state and than re-render the component according to the changes, you have to use setState, because after setState, the render function is triggered and update the UI
   
 - **Why is it bad to access or mutate the state directly?**
    - if modifying the state directly, it's NOT trigger re-render => the value on UI is NOT updated and all function or calculation NOT re-execute
@@ -113,14 +114,15 @@
       - Functional doesn't have this thing
   
 - **What does PureComponent do? How is it different from typical traditional class components?**
-   - PureComponent and ReactComponent trigger re-render whenever props or state of this component is changed
+   - PureComponent and ReactComponent trigger re-render whenever props or state of this component is changed (and vice verse: và ngược lại)
    - **PureComponent will compare props when parent component re-render, ReactComponent is not**
 
 - **React Component lifecycle?** refer [here](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
    ![React Life Cycle](./media//react_life_cycle.png)
-   - Second, **mounting** component will be render and mounted in this phase (constructor, getDerivedStateFromProps. render, componentDidMount)
-   - Third, **update** the component will be re-render if having any change from props and state or parent updating (getDerivedStateProps. shouldComponentUpdate, getSnapshotBeforeUpdate, componentDidUpdate)
-   - Last, **un mounting** component will be remove when it's not used (componentWillUnmount)
+   - **mounting** component will be render and mounted in this phase (constructor, getDerivedStateFromProps. render, componentDidMount)
+   - **update** the component will be re-render if having any change from props and state or parent updating (getDerivedStateProps. shouldComponentUpdate, getSnapshotBeforeUpdate, componentDidUpdate)
+   - **un mounting** happen when a component is being removed from the DOM (componentWillUnmount)
+<!--    - Beside, we have error handling phase, when there is an error during rendering, in a lifecycle method, or in the constructor of any child component. -->
   
 - **Use-case of using and not using getDerivedStateFromProps, getSnapshotBeforeUpdate**
    - `getDerivedStateFromProps(nextProps, prevState)`: replace and the same function as `componentWillReceiveProps(nextProps)` that will be removed in version 17 because it's not work in async rendering. Called whenever component is created or update props
@@ -130,10 +132,10 @@
       - Use case: using to auto scroll to position in chat. Eg: you have new messages => scrollHeight after !== scrollHeight before update => cal and the different inside `getSnapshotBeforeUpdate` and pass value to `componentDidUpdate` => scroll new message here
   
 - **How are errors handled in React?**
-   - Using `try-catch` to handle logical error
+   - For common, in CLASS, we can use `getDerivedStateFromError(error)` and return value to update state. We can depend on this state value to handle UI error or not
+   - Beside (CLASS), `componentDidCatch(err, info)`, it's the same with `getDerivedStateFromError` but is called during "commit" phase so can run side-effect like logging 
+   - For hook, we can use `<ErrorBoundary>` component to wrapp but it's just `try-catch` so I use `try-catch` to handle logical error instead using this component
    - To handle the condition inside JSX, I always use condition operator (ternary) and that thing makes sure no exception 
-   - Can use `componentDidCatch(err, info)`, it's the same with `getDerivedStateFromError` but is called during "commit" phase so can run side-effect like logging 
-   - For common, we can use `getDerivedStateFromError(error)` and return value to update state. We can depend on this state value to handle UI error or not
       *Document: getDerivedStateFromError is invoked after an error has been thrown by a descendant component. It receives the error that was thrown as a parameter and should return a value to update state.*
   
 - **What is React events? React events and HTML events differences?**
