@@ -29,12 +29,11 @@
 ## React and ecosystem
 - **Why React is popular than other library and frameworks?**  
   - Top 3 the most popular Front-end framework/lib in 2022: ReactJs, VueJs, Angular  
-  
-|  	| ReactJs 	| VueJs 	| Angular 	|  	|
+
+|  	| ReactJs 	| VueJs 	| Angular 	|
 |---	|---	|---	|---	|---	|
-| Advantages 	| - Support by FB<br>- Easy to learn even beginner<br>- Big community<br>- Support a lot of lib<br>- Fast enough for small or big project<br>- Flexible between class or functional style 	| - Is a mix between React and Angular<br>- Two-way binding of Angular, easy to learn of React<br>- Good for SEO<br>- Powerful documentation 	| - Two way binding -> don't care about how re-render<br>- Support by Google<br>- Enhanced server performance<br>- Clearly architecture (MVW Model-View-Whatever)<br>- Easy for readable and testing 	|  	|
-| Disadvanctages 	| - Take a lot of time to familiar with JSX<br>- The documentation is not good. Most of solutions come from community 	| - Lack of plugins<br>- Invented after React<br>- Not support by big business so can stop support any time 	| - Hard to learn for beginner<br>- The folder structure is complex 	|  	|
-|  	|  	|  	|  	|  	|
+| Advantages 	| - Support by FB<br>- Easy to learn even beginner<br>- Big community<br>- Support a lot of lib<br>- Fast enough for small or big project<br>- Flexible between class or functional style 	| - Is a mix between React and Angular<br>- Two-way binding of Angular, easy to learn of React<br>- Good for SEO<br>- Powerful documentation 	| - Two way binding -> don't care about how re-render<br>- Support by Google<br>- Enhanced server performance<br>- Clearly architecture (MVW Model-View-Whatever)<br>- Easy for readable and testing 	|
+| Disadvanctages 	| - Take a lot of time to familiar with JSX<br>- The documentation is not good. Most of solutions come from community 	| - Lack of plugins<br>- Invented after React<br>- Not support by big business so can stop support any time 	| - Hard to learn for beginner<br>- The folder structure is complex 	|
   
 - **What is Virtual Dom? how it works and used inside React?**
    - Virtual DOM just an Js Object to revival (tái hiện) real DOM in some moment and it has the same element like real DOM (div, p, span, ...) <=> (Object div, Object p, ...)
