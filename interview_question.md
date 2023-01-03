@@ -210,7 +210,9 @@
 - **Vector / Frame - reduce lagginess or lightweight - animation engine - image with transparency etc so need to get rid of it to lighten it etc… otherwise in frame, there is lagged animation**
    - How to make svg animation smoother
 - **CSS object model?**
-   - It's a set of APIs allowing control CSS from Js. The same with DOM but for CSS rather than HTML. Allow to modify CSS dynamic
+   - It's a set of APIs allowing control CSS from Js. Allow to modify CSS dynamic
+   - E.g:
+     - document.body.style.background = 'green'
 - **why we should not use the important in CSS?**
    - If all styles use `!important`, nothing is important
    - Un-expect behavior because nothing can higher priority than `!important`
