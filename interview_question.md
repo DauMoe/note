@@ -253,8 +253,7 @@
    - Redux workflow: view -> dispatch action -> update state in store -> re-render view -> ...
 
 - **Why reducers were invited in the first place?**
-   - Reducers used to monitor and manager state flow. You can dispatch an action and return data after update so that why it's very important
-   *Build to guard the data and monitor/control the side effects*
+   - Build to guard the data and monitor/control the side effects
 - **Provide solutions for not re-render component when the redux store change**
    - use hook selector to select exactly the state that is used by components. Not select a bigger state
 - **Create your own middleware with Redux?**
