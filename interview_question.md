@@ -249,7 +249,7 @@
    - Principles:
       - Single source of truth: global state of app should be stored in one place. Prevent duplicate data many places and easier to debug and inspect changing
       - State is read-only: only one-way to change state. That dispatches an action. Follow this way, the data is not overwrite by UI, UI just trace the update of state
-      - Change are made with pure reducer functions: Reducer function is pure function that receive previous state and an action. Return the next state
+      - Change are made with pure reducer functions: To specify how the state tree is transformed by actions Reducer function is pure function that receive previous state and an action. Return the next state
    - Redux workflow: view -> dispatch action -> update state in store -> re-render view -> ...
 
 - **Why reducers were invited in the first place?**
