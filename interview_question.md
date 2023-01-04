@@ -234,7 +234,7 @@
    - Easy to understand
 - **why Flux is multi stores while redux is only single store?**
    - Store in flux use to specific data. Like PostStore, MessageStore, .... ([Refer Flux](https://www.freecodecamp.org/news/how-to-use-flux-in-react-example/))
-   - Redux doesn't follow this way. Redux only has one store but having a lot of reducer. It's the same when you access all store in Flux in one place
+   - Redux doesn't follow this way. Redux only has one store but having a lot of reducer. It's the same when you access all store in Flux in one place => good for big applications with complex state, many people develop and use the same state because the concepts is clearly of redux
 - **React Context and Redux. What is the different? what is your prefer?**
    - Different:
       - Context:  
