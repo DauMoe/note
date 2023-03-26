@@ -1,7 +1,4 @@
-# Table of contents
-
-
-### Two sum:
+# Two sum:
   **Ques:** https://leetcode.com/problems/two-sum/  
   **Requirements:**  
     - complexity: less than O(n^2)  
