@@ -1,5 +1,5 @@
 ## Table of contents
-[Algorithm](./Algorithm.md)
+[Algorithm](./Algorithm.md)  
 [Common interview questions](./interview_question.md)  
 [Other questions](./other_question.md)
 
